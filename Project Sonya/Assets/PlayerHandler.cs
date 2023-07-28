@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class PlayerHandler : MonoBehaviour
 {
     [SerializeField] Rigidbody currentPlayerRigidbody;
     [SerializeField] SpringJoint currentPlayerSpringJoint;
     [SerializeField] float detachDelay;
-    
+    [SerializeField] GameObject virtualCamera;
+
     private Camera mainCamera;
     private float cameraZDistance;
     private Vector3 screenPosition;
@@ -19,17 +21,24 @@ public class PlayerHandler : MonoBehaviour
     {
         mainCamera = Camera.main;
         cameraZDistance = mainCamera.WorldToScreenPoint(transform.position).z;
+        virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
     }
 
     void Update()
     {
+        ProcessTracking();
+    }
+
+    void ProcessTracking()
+    {
         if (currentPlayerRigidbody == null) { return; }
-        
+
         if (!Touchscreen.current.primaryTouch.press.isPressed)
         {
             if (isDragging)
             {
                 currentPlayerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
                 ThrowPlayer();
             }
 
