@@ -68,5 +68,6 @@ public class PlayerHandler : MonoBehaviour
     private void DetachBall()
     {
         currentPlayerSpringJoint.gameObject.SetActive(false);
+        GameObject.Find("FrictionHandler").GetComponent<FrictionHandler>().enabled = true;
     }
 }
