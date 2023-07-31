@@ -4,15 +4,34 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class FrictionHandler : MonoBehaviour
-{    
-    private void Awake() {
+{
+    [SerializeField] PhysicMaterial physicMaterial;
+    [SerializeField] float frictionMaxVal = 2f;
+    [SerializeField] float frictionMinVal = 0.1f;
+    [SerializeField] float frictionVal = 2f;
+    [SerializeField] float frictionRateFalling = 0.8f;
+    [SerializeField] float frictionRateRising = 1.002f;
+
+    void Awake()
+    {
         this.enabled = false;
     }
+
     void Update() 
     {
-        if(Touchscreen.current.primaryTouch.press.isPressed)
+        if(Input.GetMouseButtonDown(0))
         {
-            Debug.Log("I'm pressed!!!");
+            frictionVal = Mathf.Clamp(frictionVal * frictionRateFalling, frictionMinVal, frictionMaxVal);
+            physicMaterial.dynamicFriction = frictionVal;
+            Debug.Log("Falling: " + physicMaterial.dynamicFriction);
         }
+        else
+        {
+            frictionVal = Mathf.Clamp(frictionVal * frictionRateRising, frictionMinVal, frictionMaxVal);
+            physicMaterial.dynamicFriction = frictionVal;
+            Debug.Log("Rising: " + physicMaterial.dynamicFriction);
+        }    
     }
+
+    
 }
