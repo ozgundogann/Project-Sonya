@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollisionHandler : MonoBehaviour
+public class TriggerHandler : MonoBehaviour
 {
     [SerializeField] ParticleSystem particle;
     void OnTriggerEnter(Collider other) 

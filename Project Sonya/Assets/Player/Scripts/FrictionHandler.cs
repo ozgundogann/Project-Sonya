@@ -23,13 +23,13 @@ public class FrictionHandler : MonoBehaviour
         {
             frictionVal = Mathf.Clamp(frictionVal * frictionRateFalling, frictionMinVal, frictionMaxVal);
             physicMaterial.dynamicFriction = frictionVal;
-            Debug.Log("Falling: " + physicMaterial.dynamicFriction);
+            //Debug.Log("Decreasing" + physicMaterial.dynamicFriction);
         }
         else
         {
             frictionVal = Mathf.Clamp(frictionVal * frictionRateRising, frictionMinVal, frictionMaxVal);
             physicMaterial.dynamicFriction = frictionVal;
-            Debug.Log("Rising: " + physicMaterial.dynamicFriction);
+            //Debug.Log("Increasing" + physicMaterial.dynamicFriction);
         }    
     }
 

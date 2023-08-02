@@ -13,15 +13,15 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] GameObject virtualCamera;
 
     private Camera mainCamera;
-    private float cameraZDistance;
+    private float playerZDistance;
     private Vector3 screenPosition;
     private bool isDragging;
 
     void Start()
     {
         mainCamera = Camera.main;
-        cameraZDistance = mainCamera.WorldToScreenPoint(transform.position).z;
         virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
+        playerZDistance = currentPlayerRigidbody.transform.position.z - mainCamera.transform.position.z;
     }
 
     void Update()
@@ -37,7 +37,7 @@ public class PlayerHandler : MonoBehaviour
         {
             if (isDragging)
             {
-                currentPlayerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+                //currentPlayerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
                 virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
                 ThrowPlayer();
             }
@@ -51,7 +51,7 @@ public class PlayerHandler : MonoBehaviour
         currentPlayerRigidbody.isKinematic = true;
 
         Vector2 touchPos = Touchscreen.current.primaryTouch.position.ReadValue();
-        screenPosition = new Vector3(touchPos.x, touchPos.y, cameraZDistance);
+        screenPosition = new Vector3(touchPos.x, touchPos.y, playerZDistance);
 
         Vector3 worldPos = mainCamera.ScreenToWorldPoint(screenPosition);
         currentPlayerRigidbody.position = worldPos;
@@ -69,5 +69,6 @@ public class PlayerHandler : MonoBehaviour
     {
         currentPlayerSpringJoint.gameObject.SetActive(false);
         GameObject.Find("FrictionHandler").GetComponent<FrictionHandler>().enabled = true;
+        GameObject.Find("PlayerHandler").GetComponent<WinLoseCondition>().enabled = true;
     }
 }
