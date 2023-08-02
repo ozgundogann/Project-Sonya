@@ -11,6 +11,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] SpringJoint currentPlayerSpringJoint;
     [SerializeField] float detachDelay;
     [SerializeField] GameObject virtualCamera;
+    [SerializeField] GameObject thinkingBaloons;
 
     private Camera mainCamera;
     private float playerZDistance;
@@ -46,6 +47,8 @@ public class PlayerHandler : MonoBehaviour
 
             return;
         }
+        
+        thinkingBaloons.SetActive(false);
 
         isDragging = true;
         currentPlayerRigidbody.isKinematic = true;
