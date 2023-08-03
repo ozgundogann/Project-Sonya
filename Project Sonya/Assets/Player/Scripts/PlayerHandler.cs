@@ -72,6 +72,5 @@ public class PlayerHandler : MonoBehaviour
     {
         currentPlayerSpringJoint.gameObject.SetActive(false);
         GameObject.Find("FrictionHandler").GetComponent<FrictionHandler>().enabled = true;
-        GameObject.Find("PlayerHandler").GetComponent<WinLoseCondition>().enabled = true;
     }
 }
