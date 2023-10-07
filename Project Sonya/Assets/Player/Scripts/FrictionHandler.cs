@@ -5,33 +5,32 @@ using UnityEngine.InputSystem;
 
 public class FrictionHandler : MonoBehaviour
 {
-    [SerializeField] PhysicMaterial physicMaterial;
-    [SerializeField] float frictionMaxVal = 2f;
-    [SerializeField] float frictionMinVal = 0.1f;
-    [SerializeField] float frictionVal = 2f;
-    [SerializeField] float frictionRateFalling = 0.8f;
-    [SerializeField] float frictionRateRising = 1.002f;
+    [SerializeField] float frictionRateFalling = 20f;
+    [SerializeField] float frictionRateRising = 0.01f;
+    
+    PhysicMaterial playerPhysicMaterial;
+    float frictionMaxVal;
+    float frictionMinVal = 0.1f;
 
     void Awake()
     {
         this.enabled = false;
+        playerPhysicMaterial = GameObject.Find("Player").GetComponent<Collider>().material;
+        playerPhysicMaterial.dynamicFriction = 0;
+        frictionMaxVal = 0.6f;
     }
 
-    void Update() 
+    void LateUpdate() 
     {
         if(Input.GetMouseButtonDown(0))
         {
-            frictionVal = Mathf.Clamp(frictionVal * frictionRateFalling, frictionMinVal, frictionMaxVal);
-            physicMaterial.dynamicFriction = frictionVal;
-            //Debug.Log("Decreasing" + physicMaterial.dynamicFriction);
+            playerPhysicMaterial.dynamicFriction = Mathf.Clamp(playerPhysicMaterial.dynamicFriction - (Time.fixedDeltaTime * frictionRateFalling), 0.01f, 0.6f);
         }
-        else
+        else if(playerPhysicMaterial.dynamicFriction < frictionMaxVal)
         {
-            frictionVal = Mathf.Clamp(frictionVal * frictionRateRising, frictionMinVal, frictionMaxVal);
-            physicMaterial.dynamicFriction = frictionVal;
-            //Debug.Log("Increasing" + physicMaterial.dynamicFriction);
-        }    
+            playerPhysicMaterial.dynamicFriction += frictionRateRising * Time.fixedDeltaTime ;
+        }
+          
     }
-
     
 }

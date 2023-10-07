@@ -7,22 +7,26 @@ using Cinemachine;
 
 public class PlayerHandler : MonoBehaviour
 {
-    [SerializeField] Rigidbody currentPlayerRigidbody;
     [SerializeField] SpringJoint currentPlayerSpringJoint;
     [SerializeField] float detachDelay;
     [SerializeField] GameObject virtualCamera;
-    [SerializeField] GameObject thinkingBaloons;
+    //[SerializeField] GameObject thinkingBaloons;
 
+    private Rigidbody currentPlayerRigidbody;
     private Camera mainCamera;
+    private float defaultPlayerYPos;
     private float playerZDistance;
     private Vector3 screenPosition;
     private bool isDragging;
 
     void Start()
     {
+        currentPlayerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody>();
+        defaultPlayerYPos = currentPlayerRigidbody.position.y;
         mainCamera = Camera.main;
         virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = false;
         playerZDistance = currentPlayerRigidbody.transform.position.z - mainCamera.transform.position.z;
+
     }
 
     void Update()
@@ -48,7 +52,7 @@ public class PlayerHandler : MonoBehaviour
             return;
         }
         
-        thinkingBaloons.SetActive(false);
+        //thinkingBaloons.SetActive(false);
 
         isDragging = true;
         currentPlayerRigidbody.isKinematic = true;
@@ -57,6 +61,8 @@ public class PlayerHandler : MonoBehaviour
         screenPosition = new Vector3(touchPos.x, touchPos.y, playerZDistance);
 
         Vector3 worldPos = mainCamera.ScreenToWorldPoint(screenPosition);
+        worldPos.z += worldPos.y;
+        worldPos.y = defaultPlayerYPos;
         currentPlayerRigidbody.position = worldPos;
     }
 
