@@ -17,7 +17,6 @@ public class TriggerHandler : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            PlayerPhysicMaterial.dynamicFriction = 0.6f;
             particle.Play();
         }    
     }

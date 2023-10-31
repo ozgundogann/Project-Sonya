@@ -10,7 +10,7 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] SpringJoint currentPlayerSpringJoint;
     [SerializeField] float detachDelay;
     [SerializeField] GameObject virtualCamera;
-    //[SerializeField] GameObject thinkingBaloons;
+    [SerializeField] Transform[] thinkingBaloons;
 
     private Rigidbody currentPlayerRigidbody;
     private Camera mainCamera;
@@ -39,10 +39,9 @@ public class PlayerHandler : MonoBehaviour
         if (currentPlayerRigidbody == null) { return; }
 
         if (!Touchscreen.current.primaryTouch.press.isPressed)
-        {
+        {            
             if (isDragging)
             {
-                //currentPlayerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
                 virtualCamera.GetComponent<CinemachineVirtualCamera>().enabled = true;
                 ThrowPlayer();
             }
@@ -51,7 +50,14 @@ public class PlayerHandler : MonoBehaviour
 
             return;
         }
-        
+
+        foreach(Transform t in thinkingBaloons)
+        {
+            if (t.gameObject.activeInHierarchy)
+            {
+                t.gameObject.SetActive(false);
+            }
+        }
         //thinkingBaloons.SetActive(false);
 
         isDragging = true;

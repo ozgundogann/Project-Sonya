@@ -5,26 +5,26 @@ using UnityEngine.InputSystem;
 
 public class FrictionHandler : MonoBehaviour
 {
-    [SerializeField] float frictionRateFalling = 20f;
-    [SerializeField] float frictionRateRising = 0.01f;
+    [SerializeField] float frictionRateFalling = 15f;
+    [SerializeField] float frictionRateRising = 0.03f;
+    [SerializeField] float frictionMaxVal;
     
     PhysicMaterial playerPhysicMaterial;
-    float frictionMaxVal;
-    float frictionMinVal = 0.1f;
+    float frictionMinVal = 0.01f;
 
     void Awake()
     {
-        this.enabled = false;
         playerPhysicMaterial = GameObject.Find("Player").GetComponent<Collider>().material;
-        playerPhysicMaterial.dynamicFriction = 0;
-        frictionMaxVal = 0.6f;
+        playerPhysicMaterial.dynamicFriction = frictionMaxVal;
+        this.enabled = false;
     }
 
-    void LateUpdate() 
+    void Update() 
     {
         if(Input.GetMouseButtonDown(0))
         {
-            playerPhysicMaterial.dynamicFriction = Mathf.Clamp(playerPhysicMaterial.dynamicFriction - (Time.fixedDeltaTime * frictionRateFalling), 0.01f, 0.6f);
+            playerPhysicMaterial.dynamicFriction = 
+                Mathf.Clamp(playerPhysicMaterial.dynamicFriction - frictionRateFalling * Time.fixedDeltaTime, frictionMinVal, frictionMaxVal);
         }
         else if(playerPhysicMaterial.dynamicFriction < frictionMaxVal)
         {
