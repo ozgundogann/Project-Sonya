@@ -26,9 +26,9 @@ Before you begin, ensure you have the following prerequisites:
    ```bash
    git clone https://github.com/ozgundogann/Medieval-Hunter
 
-2. Open the project in Unity.
+2. Open the project in Unity. 
 
 ### In Unity
 1. Locate Assets/GameFiles/Scenes
 2. Double click SampleScene
-3. Hit play button
+3. Hit play button ![image](https://github.com/ozgundogann/Medieval-Hunter/assets/63861431/7f900cd2-a235-464c-b9d7-ac34d1c32210)
