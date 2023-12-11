@@ -11,6 +11,8 @@ In Project Sonya, you are the caretaker of a virtual pet, and the pet communicat
 
 - **Pet Happiness**: Fulfilling the pet's needs and placing it in the correct rooms leads to a happy and satisfied pet, driving the game's success and enjoyment.
 
+## [Video (Google Drive)](https://drive.google.com/drive/folders/1G5jQM1697QoCXEkmKPfcHv4Ipiy78Q8O)
+
 ## How to Run
 
 ### Prerequisites
